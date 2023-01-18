@@ -4,15 +4,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 //Import router file
-const prueba = require('./routers/item.router.js');
+const item = require('./routers/item.router.js');
+const user = require('./routers/user.router.js');
 
 //Environment variables
 const URI = process.env.URI;
 const PORT = process.env.PORT;
 
-const server = express();
-server.use(express.json());
-server.use('/', prueba);
+const app = express();
+app.use(express.json());
+app.use('/', item);
+app.use('/users/', user);
+
 
 // Run server and connect to DB
 mongoose
@@ -20,7 +23,7 @@ mongoose
 	.then(() => {
 		console.log('Database connection successful');
 
-		server.listen(PORT, () => {
+		app.listen(PORT, () => {
 			console.log('Server running on port:', PORT);
 		});
 	})
