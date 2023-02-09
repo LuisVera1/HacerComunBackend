@@ -8,7 +8,7 @@ const validateJwt = async (req, res = response, next) => {
 	if (!token) {
 		return res.status(401).json({
 			ok: false,
-			msg: 'No hay token en la peticion',
+			msg: 'Token does not exist',
 		});
 	}
 
@@ -21,7 +21,7 @@ const validateJwt = async (req, res = response, next) => {
 	} catch (err) {
 		return res.status(401).json({
 			ok: false,
-			msg: 'Token no valido',
+			msg: 'Invalid Token',
 		});
 	}
 

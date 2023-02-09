@@ -16,7 +16,6 @@ app.use(express.json());
 app.use('/', item);
 app.use('/users/', user);
 
-
 // Run server and connect to DB
 mongoose
 	.connect(URI)
