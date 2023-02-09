@@ -2,9 +2,13 @@
 const mongoose = require('mongoose');
 
 // Creating schema
-const itemSchema = new mongoose.Schema({
+const itemScheme = new mongoose.Schema({
 	category: String,
-	sku: String,
+	sku: {
+		type: String,
+		unique: true,
+		required: true,
+	},
 	price: Number,
 	// images: [String],
 	video: String,
@@ -31,7 +35,7 @@ const itemSchema = new mongoose.Schema({
 });
 
 // Creating model
-const item = mongoose.model('product', itemSchema);
+const itemModel = mongoose.model('product', itemScheme);
 
 // Exports
-module.exports = item;
+module.exports = itemModel;

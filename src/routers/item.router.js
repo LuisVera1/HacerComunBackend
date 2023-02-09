@@ -1,67 +1,27 @@
 const express = require('express');
-const usesItem = require('../usescases/item.usecase');
+const {
+	getAllItems,
+	getItemById,
+	createItem,
+	updateItem,
+	deleteItem,
+} = require('../controllers/item.controller');
 
 const router = express.Router();
 
-// res.setHeader('Content-Type', 'application/json');
-// res.setHeader('Access-Control-Allow-Origin', '*');
+//Router: Get all items
+router.get('/shop', getAllItems);
 
-router.get('/tienda', async (req, res) => {
-	try {
-		const id = req.query.id;
-		let items;
+//Router: Get One item
+router.get('/item', getItemById);
 
-		if (id) {
-			items = await usesItem.readItemById(id);
-		} else {
-			items = await usesItem.getAllItems();
-		}
-		res.json(items);
-		res.status(200);
-	} catch (err) {
-		res.status(500);
-		res.json({ err });
-	}
-});
+//Router: Create new item
+router.post('/newitem', createItem);
 
-router.post('/newitem', async (req, res) => {
-	try {
-		const data = req.body;
-		const newUser = await usesItem.createItem(data);
+//Router: Update Item
+router.patch('/updateitem', updateItem);
 
-		res.json(newUser);
-		res.status(201);
-	} catch (err) {
-		res.status(500);
-		res.json({ err });
-	}
-});
-
-router.patch('/updateitem/:id', async (req, res) => {
-	try {
-		const id = req.params.id;
-		const updateData = req.body;
-		const updatedItem = await usesItem.updateItem(id, updateData);
-
-		res.json(updatedItem);
-		res.status(202);
-	} catch (err) {
-		res.status(500);
-		res.json({ err });
-	}
-});
-
-router.delete('/delete/:id', async (req, res) => {
-	try {
-		const id = req.params.id;
-		const deleted = await usesItem.deleteItemById(id);
-
-		res.json(deleted);
-		res.status(202);
-	} catch (err) {
-		res.status(500);
-		res.json({ err });
-	}
-});
+//Router: Delete Item
+router.delete('/deleteitem', deleteItem);
 
 module.exports = router;
