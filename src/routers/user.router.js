@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('../middlewares/fieldValidator');
 const { validateJwt } = require('../middlewares/jwtValidator');
-const { loginContr, renewTokenContr, createUserContr } = require('../controllers/user.controller');
+const { loginContr, renewTokenContr, createUserContr, editInfo, addbag } = require('../controllers/user.controller');
 
 const app = express.Router();
 
@@ -31,5 +31,15 @@ app.post(
 
 // Router:  Renew token
 app.get('/login/renew/', validateJwt, renewTokenContr);
+
+//Router: Edit info
+app.put('/edit', editInfo);
+
+//Router: add-edit bag
+app.patch('/addbag', addbag)
+
+
+
+
 
 module.exports = app;

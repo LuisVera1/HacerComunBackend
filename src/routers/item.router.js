@@ -1,6 +1,7 @@
 const express = require('express');
 const {
 	getAllItems,
+	getByFilter,
 	getItemById,
 	createItem,
 	updateItem,
@@ -11,6 +12,9 @@ const router = express.Router();
 
 //Router: Get all items
 router.get('/shop', getAllItems);
+
+//Router: Get by category
+router.get('/filter', getByFilter)
 
 //Router: Get One item
 router.get('/item', getItemById);
