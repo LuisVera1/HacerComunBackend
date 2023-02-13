@@ -3,8 +3,19 @@ const itemModel = require('../models/item.model');
 const getAllItems = async (req, res) => {
 	try {
 		const items = await itemModel.find();
-
 		return res.status(200).json(items);
+	} catch (err) {
+		return res.status(500).json({ err });
+	}
+};
+
+const getByFilter = async (req, res) => {
+	const filter = req.query.category;
+
+	try {
+		const dataFiltered = await itemModel.find({ category: filter });
+
+		return res.status(200).json(dataFiltered);
 	} catch (err) {
 		return res.status(500).json({ err });
 	}
@@ -66,6 +77,7 @@ const deleteItem = async (req, res) => {
 
 module.exports = {
 	getAllItems,
+	getByFilter,
 	getItemById,
 	createItem,
 	updateItem,
