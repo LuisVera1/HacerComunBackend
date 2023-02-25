@@ -17,6 +17,7 @@ app.use('/', item);
 app.use('/users/', user);
 
 // Run server and connect to DB
+mongoose.set("strictQuery", false);
 mongoose
 	.connect(URI)
 	.then(() => {
