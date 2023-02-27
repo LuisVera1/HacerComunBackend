@@ -103,9 +103,7 @@ const renewTokenContr = async (req, res) => {
 //Edit info
 const editInfo = async (req, res) => {
 	const data = req.body;
-
-	//TODO: ------------------------------------ recive email from frontend
-	const email = 'luisvera@gmail.com';
+	const email = req.query.email;
 
 	try {
 		const updatedUser = await userModel.findOneAndUpdate({ email: email }, data);
@@ -119,12 +117,19 @@ const editInfo = async (req, res) => {
 const addbag = async (req, res) => {
 	const item = req.body;
 	const idUser = req.query.idUser;
+	const element = req.query.element;
+	let bag;
 
 	try {
-		//TODO: ------------------------------------ recive idUser from frontend
-		const bag = await userModel.findByIdAndUpdate(idUser, { $push: { bag: item } });
+		if (element) {
+			//Delete the element of bag
+			bag = await userModel.findOneAndUpdate({ id: idUser }, { $pull: { bag: { _id: element } } });
+		} else {
+			//if one element will be adding to array
+			bag = await userModel.findByIdAndUpdate(idUser, { $push: { bag: item } });
+		}
 
-		return res.status(201).json(item);
+		return res.status(201).json(bag);
 	} catch (err) {
 		return res.status(500).json(err);
 	}
